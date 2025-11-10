@@ -42,7 +42,49 @@ class layout {
     }
     public static function message(){
         if(isset($_SESSION["msg"])){
-            echo "<div style = '". self::MSG_COLORS[$_SESSION["msg"][0]] ."'>". $_SESSION["msg"][1] ."</div>";
+            $style = self::MSG_COLORS[$_SESSION["msg"][0]];
+            $txt = $_SESSION["msg"][1];
+            echo <<<HTML
+            <style>
+                .txt {
+                    {$style}
+                    width: 100%;
+                    height: 100px;
+                    display: flex;
+                    align-items: center;          
+                    justify-content: space-between;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    font-family: Arial, sans-serif;
+                    font-size: 16px;
+                    padding: 0 20px;
+                }
+
+                .txt-content {
+                    flex: 1;                      
+                    text-align: left;          
+                }
+
+                .exit {
+                    color: #000;                  
+                    background: none;            
+                    border: none;
+                    font-size: 20px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .exit:hover {
+                    opacity: 0.7;
+                }
+            </style>
+
+            <div class="txt" id="message">
+                <div class="txt-content">{$txt}</div>
+                <button class="exit" onclick="this.parentElement.style.display='none'">X</button>
+            </div>
+            HTML;
             unset($_SESSION["msg"]);
         }
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Music\Routing;
+use Music\Controllers\FrontPageController;
 
 class Router{
     public function ReqHandle(){
@@ -24,8 +25,13 @@ class Router{
     }
     public function GETreq($URI){
         $data = $this->FilterPostKeys($_POST);
-        $id = $data["ISBN"] ?? null;
+        $id = $data["id"] ?? null;
         switch ($URI){
+            case "/":
+                $_SESSION["msg"] = ["success", "amongus"];
+                $front = new FrontPageController();
+                $front->display();
+                break;
             default:
                 echo "no GET uri matched the input";
                 break;
