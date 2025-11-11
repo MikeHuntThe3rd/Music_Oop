@@ -2,6 +2,7 @@
 
 namespace Music\Routing;
 use Music\Controllers\FrontPageController;
+use Music\Controllers\musicianController;
 
 class Router{
     public function ReqHandle(){
@@ -28,9 +29,20 @@ class Router{
         $id = $data["id"] ?? null;
         switch ($URI){
             case "/":
-                $_SESSION["msg"] = ["success", "amongus"];
                 $front = new FrontPageController();
                 $front->display();
+                break;
+            case "/musicians":
+                $ms = new musicianController();
+                $ms->display();
+                break;
+            case "/ADD_musician":
+                $ms = new musicianController();
+                $ms->add_Display();
+                break;
+            case "/EDIT_musician":
+                $ms = new musicianController();
+                $ms->edit_Display($id);
                 break;
             default:
                 echo "no GET uri matched the input";
@@ -41,7 +53,10 @@ class Router{
         $data = $this->FilterPostKeys($_POST);
         $id = $data["id"] ?? null;
         switch ($ReqURI){
-            //books
+            case "/ADD_musician":
+                $ms = new musicianController();
+                $ms->add_Save($data);
+                break;
             default:
                 echo "no POST uri matched the input";
                 break;
