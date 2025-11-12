@@ -19,6 +19,7 @@ echo <<<HTML
     <input type="date" id="death" name="death"><br><br>
     
     <input type="submit" value="Add Musician">
+    <a href="musicians">cancel</a>
 </form>
 HTML;
 ?>

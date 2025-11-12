@@ -16,9 +16,28 @@ class model {
         }
     }
     public function getTableCols($table){
-        return $this->db->SingleQuery("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'music' AND TABLE_NAME = :t", ["t" => $table]);
+        $rawData = $this->db->SingleQuery("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'music' AND TABLE_NAME = :t", ["t" => $table]);
+        $outputArr = [];
+        foreach($rawData as $assocArr){
+            if($assocArr["COLUMN_NAME"] != "id"){
+                $outputArr[] = $assocArr["COLUMN_NAME"];
+            }
+        }
+        return $outputArr;
     }
     public function insertRow($table, $data){
-        $this->db->SingleQuery("INSERT INTO :t (:cols) VALUES (:vals)", ["t" => $table, "cols" => $this->getTableCols($table), "vals" => $data]);
+        //remove empty elements
+        $data = array_filter($data, fn($v) => $v !== "");
+        //handle empty cols
+        $keys = array_keys($data);
+        $allColNames = $this->getTableCols($table);
+        var_dump($allColNames);
+        $filteredCols = implode(", ", array_intersect_key($allColNames, $keys));
+        array_walk($keys, function(&$value) {$value = ":$value";});
+        //format sql and add variables
+        $sql = "INSERT INTO $table (";
+        $sql .= $filteredCols . ") VALUES (";
+        $sql = $sql . implode(", ", $keys) . ")";
+        $this->db->SingleQuery($sql, $data);
     }
 }

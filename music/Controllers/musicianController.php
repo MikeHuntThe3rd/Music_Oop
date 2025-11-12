@@ -17,9 +17,7 @@ class musicianController extends controller {
         $this->rd->includeFile("creators/edit.php", ["creator" => $creator]);
     }
     public function add_Save($data){
-        var_dump($this->md->getTableCols("musicians"));
-        var_dump($data);
         $this->md->insertRow("musicians", $data);
-        //header("Location: musicians");
+        header("Location: musicians");
     }
 }
