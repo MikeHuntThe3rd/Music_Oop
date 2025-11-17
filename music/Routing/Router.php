@@ -30,7 +30,7 @@ class Router{
         switch ($URI){
             case "/":
                 $front = new FrontPageController();
-                $front->display();
+                $front->displaythis();
                 break;
             case "/musicians":
                 $ms = new musicianController();
@@ -56,6 +56,14 @@ class Router{
             case "/ADD_musician":
                 $ms = new musicianController();
                 $ms->add_Save($data);
+                break;
+            case "/EDIT_musician":
+                $ms = new musicianController();
+                $ms->edit_Save($id);
+                break;
+            case "/DEL_musician":
+                $ms = new musicianController();
+                $ms->delete($id);
                 break;
             default:
                 echo "no POST uri matched the input";

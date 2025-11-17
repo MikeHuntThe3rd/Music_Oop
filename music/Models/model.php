@@ -12,10 +12,10 @@ class model {
             return $this->db->SingleQuery("SELECT * FROM :t", ["t" => $table]);;
         }
         else{
-            return $this->db->SingleQuery("SELECT * FROM :t WHERE `id` = :id", ["t" => $table, "id" => $id]);
+            return $this->db->SingleQuery("SELECT * FROM $table WHERE `id` = :id", ["id" => $id]);
         }
     }
-    public function getTableCols($table){
+    private function getTableCols($table){
         $rawData = $this->db->SingleQuery("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'music' AND TABLE_NAME = :t", ["t" => $table]);
         $outputArr = [];
         foreach($rawData as $assocArr){
@@ -39,5 +39,8 @@ class model {
         $sql .= $filteredCols . ") VALUES (";
         $sql = $sql . implode(", ", $keys) . ")";
         $this->db->SingleQuery($sql, $data);
+    }
+    public function deleteRow($table, $id){
+        $this->db->SingleQuery("DELETE FROM $table WHERE id = :id", ["id" => $id]);
     }
 }

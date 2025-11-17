@@ -4,7 +4,7 @@ namespace Music\Controllers;
 use Music\Controllers\controller;
 
 class FrontPageController extends controller {
-    public function display(){
-        $this->rd->includeFile("FrontPage.php");
+    public function displaythis(){
+        $this->rd->includeFile("FrontPage");
     }
 }
