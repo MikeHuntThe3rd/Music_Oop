@@ -32,6 +32,7 @@ class controller {
     }
     public function edit_Save($data, $id){
         $this->md->updateRow(static::CLASS_VARIABLES["table"], $data, $id);
+        header("Location: ". static::CLASS_VARIABLES["table"]);
     }
     public function delete($id){
         $this->md->deleteRow(static::CLASS_VARIABLES["table"], $id);

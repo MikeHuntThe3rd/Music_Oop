@@ -69,6 +69,7 @@ class db {
         } catch (PDOException $e) {
             $_SESSION['error_message'] = $e->getMessage();
             error_log($e->getMessage());
+            $_SESSION["msg"] = ["error", "pdo exception: $e"];
             return false;
         }
     }

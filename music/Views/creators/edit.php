@@ -19,7 +19,7 @@ echo <<<HTML
     <label for="death">Death Date (optional):</label><br>
     <input type="date" id="death" name="death" value="{$creator['death']}"><br><br>
     
-    <input type="submit" value="Add Musician">
+    <input type="submit" value="Edit Musician">
     <a href="musicians">cancel</a>
 </form>
 HTML;

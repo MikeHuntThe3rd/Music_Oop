@@ -34,12 +34,12 @@ class model {
         return ["Cols" => $cols, "Vars" => $Vars];
     }
     public function updateRow($table, $data, $id){
-        $data = array_filter($data, fn($v) => $v !== "");
+        $data = array_filter($data, fn($k) => $k !== "id", ARRAY_FILTER_USE_KEY);
         $columns = $this->getRelevantColsAndVars($table, $data);
-        $sql = "UPDATE $table SET ";
+        $sql = "UPDATE $table SET";
         $size = count($columns["Cols"]);
         for($i = 0; $i < $size; $i++){
-            $sql .= $columns["Cols"][$i] . " = ". $columns["Vars"][$i];
+            $sql .= " ". $columns["Cols"][$i] . " = ". $columns["Vars"][$i];
             if($i + 1 != $size) $sql .= ",";
             else $sql .= " ";
         }
