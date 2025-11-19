@@ -9,7 +9,7 @@ class model {
     }
     public function selectTable($table, $id = null){
         if($id == null){
-            return $this->db->SingleQuery("SELECT * FROM :t", ["t" => $table]);;
+            return $this->db->SingleQuery("SELECT * FROM $table");
         }
         else{
             return $this->db->SingleQuery("SELECT * FROM $table WHERE `id` = :id", ["id" => $id]);
@@ -25,19 +25,35 @@ class model {
         }
         return $outputArr;
     }
-    public function insertRow($table, $data){
-        //remove empty elements
-        $data = array_filter($data, fn($v) => $v !== "");
-        //handle empty cols
+    private function getRelevantColsAndVars($table, $data){
         $keys = array_keys($data);
-        $allColNames = $this->getTableCols($table);
-        var_dump($allColNames);
-        $filteredCols = implode(", ", array_intersect_key($allColNames, $keys));
-        array_walk($keys, function(&$value) {$value = ":$value";});
-        //format sql and add variables
+        $cols =$this->getTableCols($table);
+        $cols = array_intersect($cols, $keys);
+        $Vars = $cols;
+        array_walk($Vars, function(&$value) {$value = ":$value";});
+        return ["Cols" => $cols, "Vars" => $Vars];
+    }
+    public function updateRow($table, $data, $id){
+        $data = array_filter($data, fn($v) => $v !== "");
+        $columns = $this->getRelevantColsAndVars($table, $data);
+        $sql = "UPDATE $table SET ";
+        $size = count($columns["Cols"]);
+        for($i = 0; $i < $size; $i++){
+            $sql .= $columns["Cols"][$i] . " = ". $columns["Vars"][$i];
+            if($i + 1 != $size) $sql .= ",";
+            else $sql .= " ";
+        }
+        $sql .= "WHERE id = $id";
+        var_dump($sql);
+        var_dump($data);
+        $this->db->SingleQuery($sql, $data);
+    }
+    public function insertRow($table, $data){
+        $data = array_filter($data, fn($v) => $v !== "");
+        $columns = $this->getRelevantColsAndVars($table, $data);
         $sql = "INSERT INTO $table (";
-        $sql .= $filteredCols . ") VALUES (";
-        $sql = $sql . implode(", ", $keys) . ")";
+        $sql .= implode(", ", $columns["Cols"]) . ") VALUES (";
+        $sql = $sql . implode(", ", $columns["Vars"]) . ")";
         $this->db->SingleQuery($sql, $data);
     }
     public function deleteRow($table, $id){

@@ -1,8 +1,8 @@
 <?php
 echo <<<HTML
-<form method="post" action="EDIT_musician">
+<form method="post" action="EDIT_musician_save">
     <input name="id" type="hidden" value="{$id['id']}">
-    <h2>Add a Musician</h2>
+    <h2>Edit The Musician</h2>
     
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" maxlength="100" value="{$creator['name']}" required><br><br>

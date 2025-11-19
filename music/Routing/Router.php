@@ -25,8 +25,6 @@ class Router{
         }
     }
     public function GETreq($URI){
-        $data = $this->FilterPostKeys($_POST);
-        $id = $data["id"] ?? null;
         switch ($URI){
             case "/":
                 $front = new FrontPageController();
@@ -39,10 +37,6 @@ class Router{
             case "/ADD_musician":
                 $ms = new musicianController();
                 $ms->add_Display();
-                break;
-            case "/EDIT_musician":
-                $ms = new musicianController();
-                $ms->edit_Display($id);
                 break;
             default:
                 echo "no GET uri matched the input";
@@ -59,7 +53,11 @@ class Router{
                 break;
             case "/EDIT_musician":
                 $ms = new musicianController();
-                $ms->edit_Save($id);
+                $ms->edit_Display($id);
+                break;
+            case "/EDIT_musician_save":
+                $ms = new musicianController();
+                $ms->edit_Save($data, $id);
                 break;
             case "/DEL_musician":
                 $ms = new musicianController();

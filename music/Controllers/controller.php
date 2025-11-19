@@ -30,8 +30,8 @@ class controller {
         $this->md->insertRow(static::CLASS_VARIABLES["table"], $data);
         header("Location: ". static::CLASS_VARIABLES["table"]);
     }
-    public function edit_Save($id){
-        var_dump($id);
+    public function edit_Save($data, $id){
+        $this->md->updateRow(static::CLASS_VARIABLES["table"], $data, $id);
     }
     public function delete($id){
         $this->md->deleteRow(static::CLASS_VARIABLES["table"], $id);
