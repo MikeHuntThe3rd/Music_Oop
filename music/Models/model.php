@@ -15,6 +15,9 @@ class model {
             return $this->db->SingleQuery("SELECT * FROM $table WHERE `id` = :id", ["id" => $id]);
         }
     }
+    public function findId($table, $col, $element){
+        return $this->db->SingleQuery("SELECT id FROM $table WHERE $col = :element", ["element" => $element])[0]["id"];
+    }
     private function getTableCols($table){
         $rawData = $this->db->SingleQuery("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'music' AND TABLE_NAME = :t", ["t" => $table]);
         $outputArr = [];
@@ -54,6 +57,10 @@ class model {
         $sql = "INSERT INTO $table (";
         $sql .= implode(", ", $columns["Cols"]) . ") VALUES (";
         $sql = $sql . implode(", ", $columns["Vars"]) . ")";
+        echo "<br>";
+        var_dump($sql);
+        var_dump($data);
+        echo "<br>";
         $this->db->SingleQuery($sql, $data);
     }
     public function deleteRow($table, $id){

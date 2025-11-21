@@ -1,6 +1,7 @@
 <?php
 echo <<<HTML
     <a href="ADD_musician">add +</a><br>
+    <a href="home">Home Page</a>
 HTML;
 foreach($creators as $creator){
     echo <<<HTML

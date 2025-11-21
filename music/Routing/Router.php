@@ -1,6 +1,7 @@
 <?php
 
 namespace Music\Routing;
+use Music\Controllers\BandsController;
 use Music\Controllers\FrontPageController;
 use Music\Controllers\musicianController;
 
@@ -26,20 +27,25 @@ class Router{
     }
     public function GETreq($URI){
         switch ($URI){
-            case "/":
-                $front = new FrontPageController();
-                $front->displaythis();
+            case "/home":
+                new FrontPageController()->displaythis();
                 break;
+            //musicians
             case "/musicians":
-                $ms = new musicianController();
-                $ms->display();
+                new musicianController()->display();
                 break;
             case "/ADD_musician":
-                $ms = new musicianController();
-                $ms->add_Display();
+                new musicianController()->add_Display();
+                break;
+            //bands
+            case "/bands":
+                new BandsController()->display();
+                break;
+            case "/ADD_band":
+                new BandsController()->add_Display();
                 break;
             default:
-                echo "no GET uri matched the input";
+                new FrontPageController()->displaythis();
                 break;
         }
     }
@@ -47,21 +53,29 @@ class Router{
         $data = $this->FilterPostKeys($_POST);
         $id = $data["id"] ?? null;
         switch ($ReqURI){
+            //musicians
             case "/ADD_musician":
-                $ms = new musicianController();
-                $ms->add_Save($data);
+                new musicianController()->add_Save($data);
                 break;
             case "/EDIT_musician":
-                $ms = new musicianController();
-                $ms->edit_Display($id);
+                new musicianController()->edit_Display($id);
                 break;
             case "/EDIT_musician_save":
-                $ms = new musicianController();
-                $ms->edit_Save($data, $id);
+                new musicianController()->edit_Save($data, $id);
                 break;
             case "/DEL_musician":
-                $ms = new musicianController();
-                $ms->delete($id);
+                new musicianController()->delete($id);
+                break;
+            //bands
+            case "/ADD_band_save":
+                new BandsController()->add_Save($data);
+                break;
+            case "/EDIT_band":
+                break;
+            case "/EDIT_band_save":
+                break;
+            case "/DEL_band":
+                new BandsController()->delete($id);
                 break;
             default:
                 echo "no POST uri matched the input";
