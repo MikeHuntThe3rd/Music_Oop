@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Music\Controllers;
-use Music\Controllers\controller;
+use music\Controllers\controller;
 
-class musicianController extends controller {
+class BandsController extends controller {
     private const CLASS_VARIABLES = [
-        "table" => "musicians",
-        "dir" => "creators"
+        "table" => "bands",
+        "dir" => "groups"
     ];
     public function display(){
         $table = $this->md->selectTable(static::CLASS_VARIABLES["table"]);
