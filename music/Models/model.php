@@ -7,8 +7,24 @@ class model {
     public function __construct(){
         $this->db = db::getInstance();
     }
-    public function selectTable($table, $id = null){
-        if($id == null){
+    public function selectTable($table, $id = null, $where = [], $AND = true){
+        
+        if(count($where) > 0){
+            $sql = "SELECT * FROM $table WHERE ";
+            $keys = array_keys($where);
+            for($i = 0; $i < count($where); $i++){
+                $sql .= " " . $keys[$i] . " = :" . $keys[$i];
+                if($i + 1 < count($where)){
+                    if($AND){
+                        $sql .= " AND";
+                    }else{
+                        $sql .= " OR";
+                    }
+                }
+            }
+            return $this->db->SingleQuery($sql, $where);
+        }
+        else if($id == null){
             return $this->db->SingleQuery("SELECT * FROM $table");
         }
         else{
@@ -18,7 +34,7 @@ class model {
     public function findId($table, $col, $element){
         return $this->db->SingleQuery("SELECT id FROM $table WHERE $col = :element", ["element" => $element])[0]["id"];
     }
-    private function getTableCols($table){
+    protected function getTableCols($table){
         $rawData = $this->db->SingleQuery("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'music' AND TABLE_NAME = :t", ["t" => $table]);
         $outputArr = [];
         foreach($rawData as $assocArr){
@@ -28,7 +44,7 @@ class model {
         }
         return $outputArr;
     }
-    private function getRelevantColsAndVars($table, $data){
+    protected function getRelevantColsAndVars($table, $data){
         $keys = array_keys($data);
         $cols =$this->getTableCols($table);
         $cols = array_intersect($cols, $keys);

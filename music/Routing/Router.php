@@ -71,8 +71,10 @@ class Router{
                 new BandsController()->add_Save($data);
                 break;
             case "/EDIT_band":
+                new BandsController()->edit_Display($id);
                 break;
             case "/EDIT_band_save":
+                new BandsController()->edit_Save($data, $id);
                 break;
             case "/DEL_band":
                 new BandsController()->delete($id);
