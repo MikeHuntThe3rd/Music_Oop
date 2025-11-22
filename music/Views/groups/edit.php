@@ -8,7 +8,7 @@ echo <<<HTML
     <input type="text" id="name" name="name" maxlength="100" value="{$band['name']}" required><br><br>
     
     <label for="musician">Name:</label><br>
-    <select name="musicians[]" style="width: 200px" multiple>
+    <select name="musicians[]" style="width: 200px" multiple required>
 HTML;
 foreach($members as $member){
     if(count(array_intersect([$member["id"]], $members_id)) > 0){

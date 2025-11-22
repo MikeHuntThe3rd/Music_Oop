@@ -8,7 +8,6 @@ class model {
         $this->db = db::getInstance();
     }
     public function selectTable($table, $id = null, $where = [], $AND = true){
-        
         if(count($where) > 0){
             $sql = "SELECT * FROM $table WHERE ";
             $keys = array_keys($where);
@@ -63,8 +62,6 @@ class model {
             else $sql .= " ";
         }
         $sql .= "WHERE id = $id";
-        var_dump($sql);
-        var_dump($data);
         $this->db->SingleQuery($sql, $data);
     }
     public function insertRow($table, $data){

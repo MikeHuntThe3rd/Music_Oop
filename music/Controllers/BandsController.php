@@ -34,9 +34,15 @@ class BandsController extends controller {
         header("Location: bands");
     }
     public function edit_Save($data, $id){
+        $musicians = $data["musicians"];
+        unset($data["musicians"]);
+        $this->md->updateRow(static::CLASS_VARIABLES["table"], $data, $id);
+        $this->creatorCleanUp($id, $musicians);
+        header("Location: bands");
     }
     public function delete($id){
         $this->md->deleteRow(static::CLASS_VARIABLES["table"], $id);
         header("Location: ". static::CLASS_VARIABLES["table"]);
     }
+    
 }

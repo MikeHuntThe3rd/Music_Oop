@@ -22,7 +22,10 @@ class musicianController extends controller {
     }
     public function add_Save($data){
         $this->md->insertRow(static::CLASS_VARIABLES["table"], $data);
-        header("Location: ". static::CLASS_VARIABLES["table"]);
+        $latestId = $this->md->db->SingleQuery("SELECT MAX(id) FROM " . static::CLASS_VARIABLES["table"])[0]["MAX(id)"];
+        $this->md->insertRow("creators", ["musician_id" => $latestId]);
+        var_dump($latestId);
+        // header("Location: ". static::CLASS_VARIABLES["table"]);
     }
     public function edit_Save($data, $id){
         $this->md->updateRow(static::CLASS_VARIABLES["table"], $data, $id);
