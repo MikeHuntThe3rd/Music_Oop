@@ -70,10 +70,10 @@ class model {
         $sql = "INSERT INTO $table (";
         $sql .= implode(", ", $columns["Cols"]) . ") VALUES (";
         $sql = $sql . implode(", ", $columns["Vars"]) . ")";
-        echo "<br>";
-        var_dump($sql);
-        var_dump($data);
-        echo "<br>";
+        // echo "<br>";
+        // var_dump($sql);
+        // var_dump($data);
+        // echo "<br>";
         $this->db->SingleQuery($sql, $data);
     }
     public function deleteRow($table, $id){

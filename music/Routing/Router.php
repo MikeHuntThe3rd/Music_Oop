@@ -4,6 +4,7 @@ namespace Music\Routing;
 use Music\Controllers\BandsController;
 use Music\Controllers\FrontPageController;
 use Music\Controllers\musicianController;
+use Music\Controllers\TrackController;
 
 class Router{
     public function ReqHandle(){
@@ -44,7 +45,15 @@ class Router{
             case "/ADD_band":
                 new BandsController()->add_Display();
                 break;
+            //music(tracks)
+            case "/music":
+                new TrackController()->display();
+                break;
+            case "/ADD_music" :
+                new TrackController()->add_Display();
+                break;
             default:
+                $_SESSION["msg" ] = ["warning", "Get url not found! Defaulting to front page"];
                 new FrontPageController()->displaythis();
                 break;
         }
@@ -78,9 +87,22 @@ class Router{
                 break;
             case "/DEL_band":
                 new BandsController()->delete($id);
+            //music(tracks)
+            case "/ADD_music":
+                new TrackController()->add_Save($data);
+                break;
+            case "/EDIT_music":
+                new TrackController()->edit_Display($id);
+                break;
+            case "/EDIT_music_save":
+                new TrackController()->edit_Save($data, $id);
+                break;
+            case "/DEL_music":
+                new TrackController()->delete($id);
                 break;
             default:
-                echo "no POST uri matched the input";
+                $_SESSION["msg" ] = ["warning", "POST url not found! Defaulting to front page"];
+                new FrontPageController()->displaythis();
                 break;
         }
     }
