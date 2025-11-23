@@ -1,0 +1,170 @@
+/* ==== GLOBAL + BACKGROUND (Red : Black = 1 : 4 Dynamic Gradient) ==== */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    overflow-x: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        rgba(200,0,0,1) 0%,
+        rgba(200,0,0,1) 20%,
+        black 20%,
+        black 100%
+    );
+
+    animation: bgShift 10s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes bgShift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+/* ==== TOP NAV ==== */
+.top-nav {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: white;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* ==== MUSICIAN LIST GRID ==== */
+.musician-list {
+    padding: 20px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* ==== CARD BASE ==== */
+.musician-card {
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.15);
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.5s ease;
+}
+
+.musician-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.musician-card:hover {
+    box-shadow: 0 0 15px rgba(255,0,0,0.4);
+}
+
+/* ==== MUSICIAN IMAGE ==== */
+.musician-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* ==== NAME ==== */
+.musician-name {
+    margin: 0 0 15px 0;
+    font-size: 1.7em;
+}
+
+/* ==== INFO SECTION ==== */
+.musician-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: bold;
+    opacity: 0.85;
+}
+
+.info-value {
+    opacity: 0.9;
+}
+
+/* ==== ACTION BUTTONS ==== */
+.musician-actions {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Full-width edit/delete buttons */
+.action-btn {
+    padding: 12px 0;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-size: 1.1em;
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* spacing between icon and text */
+}
+
+/* Icon sizing */
+.action-btn i {
+    font-size: 1.2em;
+}
+
+/* Colors */
+.action-btn.edit {
+    background: rgba(0,150,255,0.5);
+}
+.action-btn.edit:hover {
+    background: rgba(0,150,255,0.8);
+}
+
+.action-btn.delete {
+    background: rgba(255,0,0,0.5);
+}
+.action-btn.delete:hover {
+    background: rgba(255,0,0,0.8);
+}

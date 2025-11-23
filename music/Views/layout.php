@@ -11,7 +11,7 @@ class layout {
     'danger' => 'width: 100%; height: 100px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;',
     'error' => 'width: 100%; height: 100px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;'
 ];
-    public static function header($css, $script){
+    public static function header($css = [], $script = []){
         echo <<<HTML
         <!DOCTYPE html>
         <html lang="hu">

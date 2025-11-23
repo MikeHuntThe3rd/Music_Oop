@@ -1,36 +1,48 @@
 <?php
 $prev = basename($band["img_PATH"]);
 echo <<<HTML
-<form method="post" action="EDIT_band_save" enctype="multipart/form-data">
-    <input name="id" type="hidden" value="{$band['id']}">
-    <h2>Change The Band</h2>
-    
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" maxlength="100" value="{$band['name']}" required><br><br>
+<div class="background"></div>
 
-    <label for="img_PATH">Name: (prev: {$prev})</label><br>
-    <input type="file" id="img_PATH	" name="img_PATH" maxlength="500" accept="image/*" required><br><br>
-    
-    <label for="musician">Name:</label><br>
-    <select name="musicians[]" style="width: 200px" multiple required>
+<header class="top-nav">
+    <a class="nav-btn" href="home">Home Page</a>
+</header>
+
+<main class="form-container">
+    <form method="post" action="EDIT_band_save" enctype="multipart/form-data" class="musician-form">
+
+        <input name="id" type="hidden" value="{$band['id']}">
+
+        <h2>Change The Band</h2>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" maxlength="100" value="{$band['name']}" required><br><br>
+
+        <label for="img_PATH">Band image (prev: {$prev}):</label>
+        <input type="file" id="img_PATH" name="img_PATH" accept="image/*"><br><br>
+
+        <label for="musician">Members:</label>
+        <select name="musicians[]" multiple>
 HTML;
-foreach($members as $member){
-    if(count(array_intersect([$member["id"]], $members_id)) > 0){
-        echo <<<HTML
-        <option value="{$member['id']}" selected>{$member['name']}</option>
-        HTML;
-    }
-    else {
-        echo <<<HTML
-        <option value="{$member['id']}">{$member['name']}</option>
-        HTML;
-    }
-}
-echo <<<HTML
-    </select><br><br>
 
-    <input type="submit" value="Edit Musician">
-    <a href="bands">cancel</a>
-</form>
+foreach($members as $member){
+    $selected = in_array($member["id"], $members_id) ? "selected" : "";
+    $member_name = htmlspecialchars($member['name']);
+    $member_id = htmlspecialchars($member['id']);
+    echo <<<HTML
+    <option value="{$member_id}" {$selected}>{$member_name}</option>
+HTML;
+}
+
+echo <<<HTML
+        </select><br><br>
+
+        <button type="submit" class="action-btn submit-btn">
+            <i class="fas fa-edit"></i> Edit Band
+        </button>
+
+        <a href="bands" class="nav-btn cancel-btn">Cancel</a>
+
+    </form>
+</main>
 HTML;
 ?>

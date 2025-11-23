@@ -11,14 +11,14 @@ class musicianController extends controller {
     ];
     public function display(){
         $table = $this->md->selectTable(static::CLASS_VARIABLES["table"]);
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . static::CLASS_VARIABLES["table"], [static::CLASS_VARIABLES["dir"] => $table]);
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . static::CLASS_VARIABLES["table"], [static::CLASS_VARIABLES["dir"] => $table], array("musicians"), array("musicians"));
     }
     public function add_Display(){
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."add");
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."add", [], array("change_musician"), array("change_musician"));
     }
     public function edit_Display($id){
         $table = $this->md->selectTable(static::CLASS_VARIABLES["table"], $id);
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . "edit", ["creator" => $table[0], "id" => ["id" => $id]]);
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . "edit", ["creator" => $table[0], "id" => ["id" => $id]], array("change_musician"), array("change_musician"));
     }
     public function add_Save($data){
         $data["img_PATH"] = $this->fileUpload("img_PATH");

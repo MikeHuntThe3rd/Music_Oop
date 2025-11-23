@@ -10,11 +10,11 @@ class BandsController extends controller {
     ];
     public function display(){
         $table = $this->md->selectTable(static::CLASS_VARIABLES["table"]);
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . static::CLASS_VARIABLES["table"], [static::CLASS_VARIABLES["dir"] => $table]);
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . static::CLASS_VARIABLES["table"], [static::CLASS_VARIABLES["dir"] => $table], array("bands"), array("bands"));
     }
     public function add_Display(){
         $musicians = $this->md->selectTable("musicians");
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."add", ["creators" => $musicians]);
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."add", ["creators" => $musicians], array("change_band"), array("change_band"));
     }
     public function edit_Display($id){
 
@@ -22,7 +22,7 @@ class BandsController extends controller {
         $members_id = $this->md->selectTable("creators", null, ["band_id" => $id]);
         array_walk($members_id, function(&$value) {$value = $value["musician_id"];});
         $members = $this->md->selectTable("musicians");
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."edit", ["band" => $band, "members" => $members, "members_id" => $members_id]);
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."edit", ["band" => $band, "members" => $members, "members_id" => $members_id], array("change_band"), array("change_band"));
     }
     public function add_Save($data){
         $members = $data["musicians"];
