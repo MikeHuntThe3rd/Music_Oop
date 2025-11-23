@@ -87,6 +87,7 @@ class Router{
                 break;
             case "/DEL_band":
                 new BandsController()->delete($id);
+                break;
             //music(tracks)
             case "/ADD_music":
                 new TrackController()->add_Save($data);

@@ -1,17 +1,19 @@
 <?php
+$prevImg = ($row["icon_PATH"] == null)? "": basename($row["icon_PATH"]);
+$prevSound = basename($row["track_PATH"]);
 echo <<<HTML
-    <form action="EDIT_music_save" method="post">
+    <form action="EDIT_music_save" method="post" enctype="multipart/form-data">
         <h2>Add a Music</h2>
         <input name="id" type="hidden" value="{$id}">
 
         <label for="name">Track Name:</label><br>
         <input type="text" id="name" name="name" value="{$row['name']}" required><br><br>
 
-        <label for="track_PATH">Track File:</label><br>
-        <input type="text" id="track_PATH" name="track_PATH" value="{$row['track_PATH']}" required><br><br>
+        <label for="track_PATH">Track File: (prev: {$prevSound})</label><br>
+        <input type="file" id="track_PATH" name="track_PATH" accept="audio/*" required><br><br>
 
-        <label for="icon_PATH">Icon Image (optional):</label><br>
-        <input type="text" id="icon_PATH" name="icon_PATH" value="{$row['icon_PATH']}"><br><br>
+        <label for="icon_PATH">Icon Image (optional): (prev: {$prevImg})</label><br>
+        <input type="file" id="icon_PATH" name="icon_PATH" accept="image/*"><br><br>
 
         <label for="album">Album (optional):</label><br>
         <input type="text" id="album" name="album" value="{$row['album']}"><br><br>

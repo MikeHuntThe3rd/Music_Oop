@@ -12,6 +12,23 @@ class controller {
         $this->md = new model();
         $this->rd = new Render();
     }
+    protected function fileUpload($fileIndex, $isImg = true){
+        $target_dir = ($isImg) ? "uploads/img/" : "uploads/sound/";
+        $newPATH = $target_dir . basename($_FILES[$fileIndex]["name"]);
+        if(!is_dir($target_dir)){
+            mkdir($target_dir, 0777, true);
+        }
+
+        if(file_exists($newPATH)){
+            unset($_FILES[$fileIndex]);
+            return $newPATH;
+        }
+        else {
+            move_uploaded_file($_FILES[$fileIndex]["tmp_name"], $newPATH);
+            unset($_FILES[$fileIndex]);
+            return $newPATH;
+        }
+    }
     protected function creatorCleanUp($bandId, $bandMembers){
         $foundMembers = $this->md->db->SingleQuery("SELECT * FROM creators WHERE musician_id IS NOT NULL AND band_id = :id", ["id" => $bandId]);
         $single_col = array_column($foundMembers, "musician_id");

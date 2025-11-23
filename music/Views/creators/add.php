@@ -1,6 +1,6 @@
 <?php
 echo <<<HTML
-<form method="post" action="ADD_musician">
+<form method="post" action="ADD_musician" enctype="multipart/form-data">
     <h2>Add a Musician</h2>
     
     <label for="name">Name:</label><br>
@@ -9,8 +9,8 @@ echo <<<HTML
     <label for="instrument_s">Instrument(s):</label><br>
     <input type="text" id="instrument_s" name="instrument_s" maxlength="200" required><br><br>
     
-    <label for="img_PATH">Image Path:</label><br>
-    <input type="text" id="img_PATH" name="img_PATH" maxlength="500" required><br><br>
+    <label for="img_PATH">Image:</label><br>
+    <input type="file" id="img_PATH" name="img_PATH" maxlength="500" accept="image/*" required><br><br>
     
     <label for="birth">Birth Date:</label><br>
     <input type="date" id="birth" name="birth" required><br><br>

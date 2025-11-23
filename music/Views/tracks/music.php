@@ -1,6 +1,7 @@
 <?php
 echo <<<HTML
     <a href="ADD_music">add +</a><br>
+    <a href="home">Home Page</a>
 HTML;
 foreach($tracks as $track){
     echo <<<HTML

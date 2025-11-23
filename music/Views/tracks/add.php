@@ -1,16 +1,16 @@
 <?php
 echo <<<HTML
-    <form action="ADD_music" method="post">
+    <form action="ADD_music" method="post" enctype="multipart/form-data">
         <h2>Add a Music</h2>
 
         <label for="name">Track Name:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
         <label for="track_PATH">Track File:</label><br>
-        <input type="text" id="track_PATH" name="track_PATH" required><br><br>
+        <input type="file" id="track_PATH" name="track_PATH" accept="audio/*" required><br><br>
 
         <label for="icon_PATH">Icon Image (optional):</label><br>
-        <input type="text" id="icon_PATH" name="icon_PATH"><br><br>
+        <input type="file" id="icon_PATH" name="icon_PATH" accept="image/*"><br><br>
 
         <label for="album">Album (optional):</label><br>
         <input type="text" id="album" name="album"><br><br>

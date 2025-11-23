@@ -23,10 +23,26 @@ class TrackController extends controller{
         $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . "edit", ["creators" => $creators, "row" => $row[0], "id" => $id]);
     }
     public function add_Save($data){
+        $data["track_PATH"] = $this->fileUpload("track_PATH", false);
+        if($_FILES["icon_PATH"]["name"] != ""){
+            $data["icon_PATH"] = $this->fileUpload("icon_PATH");
+        }
+        else {
+            $data["icon_PATH"] = null;
+        }
+        $data["album"] = ($data["album"] == "") ? null : $data["album"];
         $this->md->insertRow(static::CLASS_VARIABLES["table"], $data);
         header("Location: ". static::CLASS_VARIABLES["table"]);
     }
     public function edit_Save($data, $id){
+        $data["track_PATH"] = $this->fileUpload("track_PATH", false);
+        if($_FILES["icon_PATH"]["name"] != ""){
+            $data["icon_PATH"] = $this->fileUpload("icon_PATH");
+        }
+        else {
+            $data["icon_PATH"] = null;
+        }
+        $data["album"] = ($data["album"] == "") ? null : $data["album"];
         $this->md->updateRow(static::CLASS_VARIABLES["table"], $data, $id);
         header("Location: ". static::CLASS_VARIABLES["table"]);
     }

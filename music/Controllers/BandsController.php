@@ -25,8 +25,10 @@ class BandsController extends controller {
         $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR ."edit", ["band" => $band, "members" => $members, "members_id" => $members_id]);
     }
     public function add_Save($data){
-        $this->md->insertRow(static::CLASS_VARIABLES["table"], ["name" => $data["name"]]);
         $members = $data["musicians"];
+        unset($data["musicians"]);
+        $data["img_PATH"] = $this->fileUpload("img_PATH");
+        $this->md->insertRow(static::CLASS_VARIABLES["table"], $data);
         $id = $this->md->findId(static::CLASS_VARIABLES["table"], "name", $data["name"]);
         foreach($members as $member){
             $this->md->insertRow("creators", ["musician_id" => $member, "band_id" => $id]);
@@ -36,6 +38,7 @@ class BandsController extends controller {
     public function edit_Save($data, $id){
         $musicians = $data["musicians"];
         unset($data["musicians"]);
+        $data["img_PATH"] = $this->fileUpload("img_PATH");
         $this->md->updateRow(static::CLASS_VARIABLES["table"], $data, $id);
         $this->creatorCleanUp($id, $musicians);
         header("Location: bands");

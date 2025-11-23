@@ -1,11 +1,15 @@
 <?php
+$prev = basename($band["img_PATH"]);
 echo <<<HTML
-<form method="post" action="EDIT_band_save">
+<form method="post" action="EDIT_band_save" enctype="multipart/form-data">
     <input name="id" type="hidden" value="{$band['id']}">
     <h2>Change The Band</h2>
     
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" maxlength="100" value="{$band['name']}" required><br><br>
+
+    <label for="img_PATH">Name: (prev: {$prev})</label><br>
+    <input type="file" id="img_PATH	" name="img_PATH" maxlength="500" accept="image/*" required><br><br>
     
     <label for="musician">Name:</label><br>
     <select name="musicians[]" style="width: 200px" multiple required>
