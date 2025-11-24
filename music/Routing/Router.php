@@ -29,84 +29,107 @@ class Router{
     public function GETreq($URI){
         switch ($URI){
             case "/home":
-                new FrontPageController()->displaythis();
+                $controller = new FrontPageController();
+                $controller->displaythis();
                 break;
-            //musicians
+            // musicians
             case "/musicians":
-                new musicianController()->display();
+                $controller = new musicianController();
+                $controller->display();
                 break;
             case "/ADD_musician":
-                new musicianController()->add_Display();
+                $controller = new musicianController();
+                $controller->add_Display();
                 break;
-            //bands
+            // bands
             case "/bands":
-                new BandsController()->display();
+                $controller = new BandsController();
+                $controller->display();
                 break;
             case "/ADD_band":
-                new BandsController()->add_Display();
+                $controller = new BandsController();
+                $controller->add_Display();
                 break;
-            //music(tracks)
+            // music (tracks)
             case "/music":
-                new TrackController()->display();
+                $controller = new TrackController();
+                $controller->display();
                 break;
-            case "/ADD_music" :
-                new TrackController()->add_Display();
+            case "/ADD_music":
+                $controller = new TrackController();
+                $controller->add_Display();
                 break;
             default:
-                $_SESSION["msg" ] = ["warning", "Get url not found! Defaulting to front page"];
-                new FrontPageController()->displaythis();
+                $_SESSION["msg"] = ["warning", "Get url not found! Defaulting to front page"];
+                $controller = new FrontPageController();
+                $controller->displaythis();
                 break;
         }
     }
+    
     public function POSTreq($ReqURI){
         $data = $this->FilterPostKeys($_POST);
         $id = $data["id"] ?? null;
         switch ($ReqURI){
-            //musicians
+            // musicians
             case "/ADD_musician":
-                new musicianController()->add_Save($data);
+                $controller = new musicianController();
+                $controller->add_Save($data);
                 break;
             case "/EDIT_musician":
-                new musicianController()->edit_Display($id);
+                $controller = new musicianController();
+                $controller->edit_Display($id);
                 break;
             case "/EDIT_musician_save":
-                new musicianController()->edit_Save($data, $id);
+                $controller = new musicianController();
+                $controller->edit_Save($data, $id);
                 break;
             case "/DEL_musician":
-                new musicianController()->delete($id);
+                $controller = new musicianController();
+                $controller->delete($id);
                 break;
-            //bands
+            // bands
             case "/ADD_band_save":
-                new BandsController()->add_Save($data);
+                $controller = new BandsController();
+                $controller->add_Save($data);
                 break;
             case "/EDIT_band":
-                new BandsController()->edit_Display($id);
+                $controller = new BandsController();
+                $controller->edit_Display($id);
                 break;
             case "/EDIT_band_save":
-                new BandsController()->edit_Save($data, $id);
+                $controller = new BandsController();
+                $controller->edit_Save($data, $id);
                 break;
             case "/DEL_band":
-                new BandsController()->delete($id);
+                $controller = new BandsController();
+                $controller->delete($id);
                 break;
-            //music(tracks)
+            // music (tracks)
             case "/ADD_music":
-                new TrackController()->add_Save($data);
+                $controller = new TrackController();
+                $controller->add_Save($data);
                 break;
             case "/EDIT_music":
-                new TrackController()->edit_Display($id);
+                $controller = new TrackController();
+                $controller->edit_Display($id);
                 break;
             case "/EDIT_music_save":
-                new TrackController()->edit_Save($data, $id);
+                $controller = new TrackController();
+                $controller->edit_Save($data, $id);
                 break;
             case "/DEL_music":
-                new TrackController()->delete($id);
+                $controller = new TrackController();
+                $controller->delete($id);
                 break;
             default:
-                $_SESSION["msg" ] = ["warning", "POST url not found! Defaulting to front page"];
-                new FrontPageController()->displaythis();
+                $_SESSION["msg"] = ["warning", "POST url not found! Defaulting to front page"];
+                $controller = new FrontPageController();
+                $controller->displaythis();
                 break;
         }
     }
+    
     public function FilterPostKeys($data){
         $filterKeys = ['_method', 'submit'];
         return array_diff_key($data, array_flip($filterKeys));

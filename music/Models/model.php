@@ -12,7 +12,13 @@ class model {
             $sql = "SELECT * FROM $table WHERE ";
             $keys = array_keys($where);
             for($i = 0; $i < count($where); $i++){
-                $sql .= " " . $keys[$i] . " = :" . $keys[$i];
+                if($where[$keys[$i]] === null){
+                    $sql .= " $keys[$i] IS NULL ";
+                    unset($where[$keys[$i]]);
+                }
+                else{
+                    $sql .= " $keys[$i]  = :$keys[$i] ";
+                }
                 if($i + 1 < count($where)){
                     if($AND){
                         $sql .= " AND";
@@ -29,6 +35,19 @@ class model {
         else{
             return $this->db->SingleQuery("SELECT * FROM $table WHERE `id` = :id", ["id" => $id]);
         }
+    }
+    public function multiIdSearch($table, $col, $id){
+        $sql = "SELECT * FROM $table WHERE ";
+        $assocArr = [];
+        for($i = 0; $i < count($id); $i++){
+            $key = (string)$id[$i] . "asd";
+            $assocArr[$key] = $id[$i];
+            $sql .= "$col = :" . $key;
+            if($i + 1 < count($id)){
+                $sql .= " OR ";
+            }
+        }
+        return $this->db->SingleQuery($sql, $assocArr);
     }
     public function findId($table, $col, $element){
         return $this->db->SingleQuery("SELECT id FROM $table WHERE $col = :element", ["element" => $element])[0]["id"];
@@ -62,6 +81,9 @@ class model {
             else $sql .= " ";
         }
         $sql .= "WHERE id = $id";
+        var_dump($sql);
+        echo "<br>";
+        var_dump($data);
         $this->db->SingleQuery($sql, $data);
     }
     public function insertRow($table, $data){
