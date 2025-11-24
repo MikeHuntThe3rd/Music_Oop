@@ -22,8 +22,7 @@ class TrackController extends controller{
         $creators = $this->md->selectTable("musicians");
         $bands = $this->md->selectTable("bands");
         $row = $this->md->selectTable(static::CLASS_VARIABLES["table"], $id);
-        $creatortype = ($this->md->selectTable("creators", $row[0]["creator_id"])["bands_id"] === null)? "creator": "band";
-        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . "edit", ["creators" => $creators, "bands" => $bands, "row" => $row[0], "id" => $id, "creatortype" => $creatortype], array("change_music"), array("change_music"));
+        $this->rd->includeFile(static::CLASS_VARIABLES["dir"] . DIRECTORY_SEPARATOR . "edit", ["creators" => $creators, "bands" => $bands, "row" => $row[0], "id" => $id], array("change_music"), array("change_music"));
     }
     public function add_Save($data){
         $data["track_PATH"] = $this->fileUpload("track_PATH", false);
